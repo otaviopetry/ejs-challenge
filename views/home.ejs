@@ -1,0 +1,25 @@
+<%- include("partials/header") -%>
+
+<main id="homePage">
+    <div class="container">
+        <h1 class="page-title">Minha jornada profissional</h1>
+        
+        <% data.forEach( function (post) { %>
+            
+            <div class="entry">
+                <h2><%= post.newPostTitle %></h2>
+                <div class="content">
+                    <%= post.newPostContent.substring(0, 100) + " ..."; %>
+                    <a href="/entries/<%= post.newPostHREF %>" title="Ler mais">Ler mais</a>
+                </div>
+                <hr> 
+            </div>
+                   
+
+        <% }) %>
+
+
+    </div>
+</main>
+
+<%- include("partials/footer") -%>

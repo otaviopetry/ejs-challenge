@@ -1,0 +1,94 @@
+@import 'mybootstrap.scss'
+
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+
+$mainGreen: #00A88F
+
+
+main
+    padding-top: 3rem
+    min-height: calc(100vh - 96px)
+
+#main-navigation
+    background-color: $mainGreen
+    
+    a
+        color: #fff
+
+    #navbarNav        
+        
+        ul
+            width: 100%
+            display: flex
+            justify-content: center
+            text-align: center
+            border-top: 2px solid #fff
+            margin-top: 1rem
+
+            @media screen and (min-width: $lg)
+                justify-content: flex-end
+                border-top: 0
+                margin-top: 0
+                
+
+            li
+                padding: 1rem 0rem
+                
+                @media screen and (min-width: $lg)
+                    padding: 0 1rem
+                        
+                    &:last-child
+                        padding-right: 0
+    
+    .container
+        justify-content: space-around
+
+    .navbar-brand
+        font-weight: bold       
+
+#site-footer
+    text-align: center
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 40px
+    background-color: #333
+    color: #fff
+
+    p
+        margin: 0
+
+    a
+        color: #fff
+
+
+#compose-page
+
+    h1
+        text-align: center
+
+    form
+        text-align: center
+
+        label
+            display: block
+            text-align: left
+            font-weight: bold
+
+        input, textarea
+            width: 100%
+            margin-bottom: 1rem
+
+#homePage
+
+    .page-title
+        margin-bottom: 3rem
+        text-decoration: underline
+        font-size: 4rem
+
+    .entry
+        hr
+            margin: 3rem 0
