@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const ejs = require('ejs');
 const lodash = require('lodash');
 
 const app = express();
+
+app.use(express.static('public'));
 
 mongoose.connect('mongodb://localhost:27017/workJournalDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -80,42 +81,32 @@ app.post("/compose", function (req, res) {
         postURL: lodash.kebabCase(req.body.postTitle)
     });
 
-    newPost.save();
-    
-    res.redirect("/");
-
+    newPost.save( (err) => {
+        if (!err) {
+            res.redirect('/');
+        }
+    });
 })
 
-app.get("/entries/:postName", function (req, res) {
+app.get('/entries/:postId', function (request, response) {
+    // store the wanted post ID
+    const requiredPostId = request.params.postId;
 
-    // store the post name in request params     
-    const requiredPost = lodash.lowerCase(req.params.postName); // a constante não mudará de valor durante a execução do loop... se outro loop for executado, ela será definida novamente
-    
-    // start a found boolean
+    // start a 'found' boolean
     let found = false;
 
-    // start an empty object for the post retrieved below
-    let requiredEntry = {};
-
-    // iterate through posts and find if the required url exists
-    allPosts.forEach( function (post) {
-
-        // create a lowercase version of the current selected post
-        const storedPostTitle = lodash.lowerCase(post.title);
-        
-        // compare the required post title with current selected post
-        // set found = true and required entry if title matches
-        if ( requiredPost === storedPostTitle ) {
+    // iterate through posts searching for required ID
+    allPosts.forEach( (post) => {        
+        if ( requiredPostId == post._id ) {
             found = true;
-            requiredEntry = post;
-            res.render("entry", {
-                renderPost: requiredEntry
-            });
-        }                
+            response.render('entry', {
+                renderPost: post
+            })
+        }         
     })
 
-    if (found === false ) {
-        console.log("There is no entry with this title");
+    if ( found === false ) {
+        response.send("No posts found with matching ID.")
     }
 })
 
