@@ -92,22 +92,14 @@ app.get('/entries/:postId', function (request, response) {
     // store the wanted post ID
     const requiredPostId = request.params.postId;
 
-    // start a 'found' boolean
-    let found = false;
-
-    // iterate through posts searching for required ID
-    allPosts.forEach( (post) => {        
-        if ( requiredPostId == post._id ) {
-            found = true;
+    Post.findOne({ _id: requiredPostId}, function (error, post) {
+        error
+        ? console.warn(error)
+        :
             response.render('entry', {
                 renderPost: post
             })
-        }         
     })
-
-    if ( found === false ) {
-        response.send("No posts found with matching ID.")
-    }
 })
 
 app.listen("3000", function() {
